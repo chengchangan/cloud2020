@@ -4,22 +4,19 @@ import com.cca.springcloud.entities.CommonResult;
 import com.cca.springcloud.entities.Payment;
 import com.cca.springcloud.servic.PaymentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @Slf4j
-@Controller
+@RestController
 public class PaymentController {
 
     @Resource
     private PaymentService paymentService;
 
     @PostMapping("/payment/create")
-    public CommonResult<Integer> create(Payment payment) {
+    public CommonResult<Integer> create(@RequestBody Payment payment) {
         int result = paymentService.create(payment);
         log.info("插入结果：{}", result);
         if (result > 0) {
