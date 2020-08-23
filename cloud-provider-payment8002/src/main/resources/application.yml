@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 8002
 
 spring:
   application:
@@ -19,16 +19,17 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka   # 表示要往哪个地方注册自己的信息
   instance:
-    instance-id: payment8001  #服务名称
+    instance-id: payment8002  #服务名称
     prefer-ip-address: true #开启服务显示的ip
     lease-renewal-interval-in-seconds: 1  # 每隔多久向EurekaServer发送心跳
     lease-expiration-duration-in-seconds: 2 # EurekaServer 最后一次收到心跳后再等多久，超时则剔除服务
+
 
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.cca.springcloud.entities
 logging:
   level:
-    com.cca.springcloud.dao: debug
+    com.cca.springcloud.dao.PaymentDao: debug
 
 
