@@ -14,5 +14,7 @@ eureka:
   instance:
     instance-id: order80  #服务名称
     prefer-ip-address: true #开启服务显示的ip
-    lease-renewal-interval-in-seconds: 1  # 每隔多久向EurekaServer发送心跳
-    lease-expiration-duration-in-seconds: 2 # EurekaServer 最后一次收到心跳后再等多久，超时则剔除服务
+
+    # 保护机制
+#    lease-renewal-interval-in-seconds: 2  # 每隔多久向EurekaServer发送心跳
+#    lease-expiration-duration-in-seconds: 10 # EurekaServer 最后一次收到心跳后再等多久，超时则剔除服务
