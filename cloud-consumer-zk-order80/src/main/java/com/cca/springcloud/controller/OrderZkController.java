@@ -17,12 +17,12 @@ public class OrderZkController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String ORDER_SERVICE_NAME = "http://cloud-provider-payment";
+    private static final String PAYMENT_SERVICE = "http://cloud-provider-payment";
 
 
     @GetMapping("/consumer/payment/zk")
     public String getPayment() {
         log.info("zk 消费者");
-        return restTemplate.getForObject(ORDER_SERVICE_NAME + "/payment/zk", String.class);
+        return restTemplate.getForObject(PAYMENT_SERVICE + "/payment/zk", String.class);
     }
 }

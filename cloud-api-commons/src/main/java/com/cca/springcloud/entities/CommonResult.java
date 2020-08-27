@@ -17,5 +17,15 @@ public class CommonResult<T> {
     public CommonResult(Integer code, String message) {
         this(code, message, null);
     }
+
+    public CommonResult(T data) {
+        this.data = data;
+        this.code = 200;
+    }
+
+
+    public static <T> CommonResult success(T data) {
+        return new CommonResult(data);
+    }
 }
 

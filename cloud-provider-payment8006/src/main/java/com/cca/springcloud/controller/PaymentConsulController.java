@@ -9,19 +9,19 @@ import java.util.UUID;
 
 /**
  * @author cca
- * @date 2020/8/26 19:28
+ * @date 2020/8/27 19:07
  */
 @RestController
 @Slf4j
-public class PaymenController {
+public class PaymentConsulController {
 
     @Value("${server.port}")
     private String serverPort;
 
-    @GetMapping(value = "/payment/zk")
-    public String paymentzk(){
-        log.info("zk 提供者");
-        return "springcloud with zookeeper:"+serverPort+"\t"+ UUID.randomUUID().toString();
+    @GetMapping("/payment/consul")
+    public String paymentConsul() {
+        log.info("consul provider end ! ! !");
+        return "springcloud with consul:" + serverPort + "\t" + UUID.randomUUID().toString();
     }
 
 }
