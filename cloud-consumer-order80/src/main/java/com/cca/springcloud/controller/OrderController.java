@@ -1,4 +1,4 @@
-package com.cca.controller;
+package com.cca.springcloud.controller;
 
 import com.cca.springcloud.entities.CommonResult;
 import com.cca.springcloud.entities.Payment;

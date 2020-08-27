@@ -1,4 +1,4 @@
-package com.cca;
+package com.cca.springcloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
