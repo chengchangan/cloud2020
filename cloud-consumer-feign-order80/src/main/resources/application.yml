@@ -11,3 +11,18 @@ eureka:
   instance:
     instance-id: order80  #服务名称
     prefer-ip-address: true #开启服务显示的ip
+
+
+feign:
+  client:
+    config:
+      cloud-payment-service:  # 指定这个服务的 超时以及日志的级别
+        connectTimeout: 5000  # feign 超时
+        readTimeout: 5000
+        loggerLevel: full     # 日志级别（详细程度）
+
+
+logging:
+  level:  # 指定哪些类或者方法开启日志打印
+    com.cca.springcloud.service.PaymentServiceFeign: debug
+    com.cca.springcloud.controller.OrderController: debug
