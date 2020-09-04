@@ -12,13 +12,17 @@ eureka:
     instance-id: hystrix-order80  #服务名称
     prefer-ip-address: true #开启服务显示的ip
 
+#feign:
+#  client:
+#    config:
+#      default:  # 指定这个服务的 超时以及日志的级别
+#        connectTimeout: 5000     # feign 超时       不配置默认1s
+#        readTimeout: 5000
+#        loggerLevel: full     # 日志级别（详细程度）
+
 feign:
-  client:
-    config:
-      default:  # 指定这个服务的 超时以及日志的级别
-        connectTimeout: 5000  # feign 超时
-        readTimeout: 5000
-        loggerLevel: full     # 日志级别（详细程度）
+  hystrix:
+    enabled: true
 
 
 
