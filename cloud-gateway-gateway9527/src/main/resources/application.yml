@@ -6,13 +6,19 @@ spring:
     name: cloud-getway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true # 开启动态路由功能
+
       routes:
         - id: payment_route_1 #路由的ID，没有固定规则但要求唯一，建议配合服务名
-          uri: http://localhost:8001   #匹配后提供服务的路由地址
+          # uri: http://localhost:8001   #匹配后提供服务的路由地址
+          uri: lb://CLOUD-HYSTRIX-PAYMENT-SERVICE # 根据服务名动态获取某一个服务进行调用，提供负载均衡功能
           predicates:
             - Path=/payment/hystrix/ok/**   #断言,路径相匹配的进行路由
-
-
+            - After=2020-09-08T20:14:05.640+08:00[Asia/Shanghai]  # 访问时间必须在这之后
+            - Cookie=username, cca # cookie 里有必须包含 username = cca
+            - Header=X-Reauest-Id,\d+ # header 参数里必须有一个 是数字的
 
 eureka:
   client:
