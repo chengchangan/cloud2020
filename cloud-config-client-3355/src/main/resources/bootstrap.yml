@@ -15,6 +15,14 @@ spring:
 
 #      uri: http://localhost:3344  # springCloud-config-server 地址　现在是写死地址
 
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
 eureka:
   client:
     register-with-eureka: true
