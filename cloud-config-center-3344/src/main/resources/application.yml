@@ -1,0 +1,30 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/myJavaHome-cca/springcloud-config.git # github地址
+          force-pull: true
+          username: 827430150@qq.com
+          password: an060150
+          search-paths:
+#            - springcloud-config  # 指定寻找的路径
+            - /** # 查找当前仓库下的所有文件（包括文件夹下的）
+      label: master   # 指定 github 分支
+
+
+
+eureka:
+  client:
+    register-with-eureka: true  #表示是否将自己注册进EurekaServer,默认true
+    fetchRegistry: true         #表示是否从EurekaServer抓取已有注册的信息,默认true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka   # 表示要往哪个地方注册自己的信息
+  instance:
+    instance-id: cloud-config-center3344  #服务名称
+    prefer-ip-address: true #开启服务显示的ip
+
