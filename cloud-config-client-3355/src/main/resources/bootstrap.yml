@@ -9,7 +9,11 @@ spring:
       label: master     # 获取那个分支的内容
       name: application # 配置文件名   application-prod.yml
       profile: prod # 扩展名
-      uri: http://localhost:3344  # springCloud-config-server 地址
+      discovery:
+        enabled: true
+        service-id: CLOUD-CONFIG-CENTER # 使用服务发现的方式去找配置中心
+
+#      uri: http://localhost:3344  # springCloud-config-server 地址　现在是写死地址
 
 eureka:
   client:
