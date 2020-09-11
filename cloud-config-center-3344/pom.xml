@@ -19,6 +19,12 @@
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 
+        <!-- 消息总线 amqp实现-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
+
         <!-- eureka client端-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
