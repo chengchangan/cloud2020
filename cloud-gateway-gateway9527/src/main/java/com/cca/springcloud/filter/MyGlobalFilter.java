@@ -2,7 +2,9 @@ package com.cca.springcloud.filter;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.cca.springcloud.authentication.ApiAuthenticator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -27,6 +29,9 @@ import java.util.List;
 @Slf4j
 public class MyGlobalFilter implements GlobalFilter, Ordered {
 
+    @Autowired
+    private ApiAuthenticator apiAuthenticator;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
@@ -42,6 +47,8 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
             // 如果想返回响应结果，参考：https://www.jianshu.com/p/9f00e0e1681c
             return response.setComplete();
         }
+//        apiAuthenticator.auth() todo 增加权限校验
+
         return chain.filter(exchange);
     }
 
