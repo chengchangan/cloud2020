@@ -4,6 +4,7 @@ import com.cca.springcloud.authentication.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ServerWebExchange;
 
 import javax.annotation.Resource;
 
@@ -20,26 +21,27 @@ public class DefaultApiAuthenticator implements ApiAuthenticator {
 
 
     @Override
-    public AuthResult auth(String url) {
-        ApiRequest request = ApiRequest.createFromFullUrl(url);
+    public AuthResult auth(ServerWebExchange exchange) {
+        ApiRequest request = ApiRequest.createFromFullUrl(exchange);
         return auth(request);
     }
 
     @Override
     public AuthResult auth(ApiRequest apiRequest) {
-        // 1、获取request信息 创建 AuthToken
+        // 1、创建token
         AuthToken clientToken = new AuthToken(apiRequest.getToken(), apiRequest.getTimestamp());
-        // 2、校验 client_token
+        // 2、校验过期
         if (clientToken.isExpired()) {
             return AuthResult.failed("token is expired");
         }
-        // 3、根据请求信息生成服务器token
+        // 3、根据appId，获取secret
         String secret = defaultCredentialStorage.getSecretByAppId(apiRequest.getAppId());
         if (StringUtils.isEmpty(secret)) {
             return AuthResult.failed("invalid appId");
         }
+        // 4、生成服务器token
         AuthToken serverToken = AuthToken.generate(apiRequest, secret);
-        // 4、比对client 和 server 的token
+        // 5、比对client 和 server 的token
         if (!clientToken.match(serverToken)) {
             return AuthResult.failed("token valid failed");
         }

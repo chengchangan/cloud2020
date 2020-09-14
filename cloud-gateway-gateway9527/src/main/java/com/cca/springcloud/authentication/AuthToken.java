@@ -14,11 +14,11 @@ public class AuthToken {
     /**
      * token
      */
-    private String token;
+    private final String token;
     /**
      * token 创建时间
      */
-    private long createTime;
+    private final long createTime;
     /**
      * token 过期时间
      * 默认过期1分钟
@@ -49,10 +49,10 @@ public class AuthToken {
      * 根据请求信息生成 服务器token
      */
     public static AuthToken generate(ApiRequest apiRequest, String secret) {
-        // 1、拼装url
-        String url = apiRequest.buildUrl(secret);
+        // 1、拼装需要加密的字符串
+        String signParam = apiRequest.buildSignParam(secret);
         // 2、创建token （md5、rsa。。）
-        String token = DigestUtils.md5DigestAsHex(url.getBytes());
+        String token = DigestUtils.md5DigestAsHex(signParam.getBytes());
         // 3、创建AuthToken
         return new AuthToken(token, System.currentTimeMillis());
     }

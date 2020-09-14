@@ -1,9 +1,11 @@
 package com.cca.springcloud.authentication;
 
-import org.springframework.util.StringUtils;
+import org.springframework.util.Assert;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.server.ServerWebExchange;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * 对url的一些操作
@@ -14,13 +16,19 @@ import java.util.Map;
  * @date 2020/9/11 14:14
  */
 public class ApiRequest {
-    private String baseUrl;
-    private String token;
+
     private String appId;
     private long timestamp;
+    private String format;
+    private String version;
+    private String data;
+    private String token;
 
-    public ApiRequest(String baseUrl, String token, String appId, long timestamp) {
-        this.baseUrl = baseUrl;
+    public ApiRequest() {
+
+    }
+
+    public ApiRequest(String token, String appId, long timestamp) {
         this.token = token;
         this.appId = appId;
         this.timestamp = timestamp;
@@ -29,48 +37,40 @@ public class ApiRequest {
     /**
      * 拼装URL 方式可变动
      */
-    public String buildUrl(String secret) {
-        StringBuilder builder = new StringBuilder(secret);
-        return builder
-                .append(baseUrl)
-                .append(appId)
-                .append(timestamp)
-                .append(secret).toString();
-    }
-
-    public static ApiRequest createFromFullUrl(String fullUrl) {
-        Map<String, String> parse = parse(fullUrl);
-        return new ApiRequest(parse.get("baseUrl"), parse.get("token"), parse.get("appId"), Long.parseLong(parse.get("timestamp")));
-    }
-
-
-    private static Map<String, String> parse(String fullUrl) {
-        HashMap<String, String> urlParams = new HashMap<>();
-        int index = fullUrl.indexOf("?");
-        if (index > 0) {
-            urlParams.put("baseUrl", fullUrl.substring(0, index));
-            String substring = fullUrl.substring(index + 1);
-            if (!StringUtils.isEmpty(substring)) {
-                String[] kv = substring.split("&");
-                for (String vkStr : kv) {
-                    String[] kvArr = vkStr.split("=");
-                    if (kvArr.length == 2) {
-                        urlParams.put(kvArr[0].trim(), kvArr[1].trim());
-                    }
-                }
-            }
-        } else {
-            urlParams.put("baseUrl", fullUrl);
+    public String buildSignParam(String secret) {
+        StringBuilder signParams = new StringBuilder(secret);
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put("app_id", this.appId);
+        params.put("timestamp", String.valueOf(this.timestamp));
+        params.put("format", this.format);
+        params.put("v", this.version);
+        params.put("data", this.data);
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            signParams.append(entry.getKey()).append(entry.getValue());
         }
-        return urlParams;
+        return signParams.append(secret).toString();
     }
 
-    public String getBaseUrl() {
-        return baseUrl;
-    }
-
-    public String getToken() {
-        return token;
+    public static ApiRequest createFromFullUrl(ServerWebExchange exchange) {
+        MultiValueMap<String, String> queryParams = exchange.getRequest().getQueryParams();
+        ApiRequest request = new ApiRequest();
+        // appId
+        request.appId = queryParams.getFirst("app_id");
+        Assert.notNull(request.appId, "app_id 为空");
+        // timestamp
+        String timestamp = queryParams.getFirst("timestamp");
+        Assert.notNull(timestamp, "timestamp 为空");
+        request.timestamp = Long.parseLong(timestamp);
+        // format
+        request.format = queryParams.getFirst("format");
+        Assert.notNull(request.format, "format 为空");
+        // v
+        request.version = queryParams.getFirst("v");
+        Assert.notNull(request.version, "v 为空");
+        // body
+        request.data = exchange.getAttribute("requestBody");
+        request.token = queryParams.getFirst("token");
+        return request;
     }
 
     public String getAppId() {
@@ -79,5 +79,21 @@ public class ApiRequest {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

@@ -25,7 +25,7 @@ import java.util.List;
  * 日志
  * 鉴权
  */
-@Component
+//@Component
 @Slf4j
 public class MyGlobalFilter implements GlobalFilter, Ordered {
 
@@ -54,6 +54,6 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return 1;
     }
 }
