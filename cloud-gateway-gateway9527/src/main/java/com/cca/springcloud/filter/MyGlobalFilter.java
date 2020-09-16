@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.cca.springcloud.authentication.ApiAuthenticator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -25,12 +26,11 @@ import java.util.List;
  * 日志
  * 鉴权
  */
-//@Component
+@Testing
+@Component
 @Slf4j
 public class MyGlobalFilter implements GlobalFilter, Ordered {
 
-    @Autowired
-    private ApiAuthenticator apiAuthenticator;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

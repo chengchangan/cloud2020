@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
  * @author cca
  * @date 2020/9/12 16:01
  */
+@Testing
 @Component
 @Slf4j
 public class AuthenticationFilter implements GlobalFilter, Ordered {

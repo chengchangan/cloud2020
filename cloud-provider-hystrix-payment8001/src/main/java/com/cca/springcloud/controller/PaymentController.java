@@ -1,10 +1,12 @@
 package com.cca.springcloud.controller;
 
 
-import com.cca.springcloud.entities.User;
 import com.cca.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -17,10 +19,9 @@ public class PaymentController {
 
 
     @RequestMapping("/payment/hystrix/ok/{id}")
-    public String paymentInfo_OK(@PathVariable("id") Integer id, @RequestBody User user) {
+    public String paymentInfo_OK(@PathVariable("id") Integer id) {
         String result = paymentService.paymentInfo_OK(id);
         log.info("*******result: " + result);
-        log.info("*******user: " + user.toString());
         return result;
     }
 
