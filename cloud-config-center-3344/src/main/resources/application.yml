@@ -16,6 +16,12 @@ spring:
             - /** # 查找当前仓库下的所有文件（包括文件夹下的）
       label: master   # 指定 github 分支
 
+  rabbitmq:
+    host: 120.79.136.105
+    port: 5672
+    username: guest
+    password: guest
+
 
 
 eureka:
@@ -28,3 +34,8 @@ eureka:
     instance-id: cloud-config-center3344  #服务名称
     prefer-ip-address: true #开启服务显示的ip
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'

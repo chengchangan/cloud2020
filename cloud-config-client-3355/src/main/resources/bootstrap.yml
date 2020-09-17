@@ -12,9 +12,12 @@ spring:
       discovery:
         enabled: true
         service-id: CLOUD-CONFIG-CENTER # 使用服务发现的方式去找配置中心
-
 #      uri: http://localhost:3344  # springCloud-config-server 地址　现在是写死地址
-
+  rabbitmq:
+    host: 120.79.136.105
+    port: 5672
+    username: guest
+    password: guest
 
 management:
   endpoints:
