@@ -51,4 +51,5 @@
                 web:
                   exposure:
                     include: 'bus-refresh'
+        4、发送请求通知server
 　　```
