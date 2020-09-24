@@ -1,9 +1,9 @@
 server:
-  port: 8801
+  port: 8802
 
 spring:
   application:
-    name: cloud-stream-provider
+    name: cloud-stream-consumer
   cloud:
     stream:
       binders: # 在此处配置要绑定的rabbitmq的服务信息；
@@ -16,19 +16,29 @@ spring:
                 port: 5672
                 username: guest
                 password: guest
-      bindings: # 服务的整合处理
-        output: # output：发送者， input：消费者   【这个名字是一个通道的名称】
-          destination: studyExchange  # 表示要使用的Exchange名称定义　【相当于声明一个交换机】
-          content-type: application/json  # 设置消息类型，本次为json，文本则设置“text/plain”
-          bander: defaultRabbit # 设置要绑定的消息服务的具体设置，对应上面的 binders
+
+      bindings: # 声明channel 对应的[交换机、binder（mq的环境）、创建队列]
+        input:  # 一个通道的名字 channelName
+          destination: studyExchange  # 交换机
+          content-type: application/json
+          bander: defaultRabbit # 指定环境
+          group: myGroup-A  # 在上面的交换机上创建一个队列（分组）
+
+        trade-input:
+          destination: studyExchange  # 交换机
+          content-type: application/json
+          bander: defaultRabbit
+          group: myGroup-B  # 在上面的交换机上创建一个队列（分组），名称为： destination.group
 
       rabbit:
         bindings:
-          output:
-            producer:
-              routing-key-expression: headers.type  # 发送的消息根据什么路由
-              exchangeType: direct  # 声明交换机的类型
+          input:  # 绑定 channel 和 路由key,
+            consumer:
+              bindingRoutingKey: normal
 
+          trade-input:
+            consumer:
+              bindingRoutingKey: trade
 
 eureka:
   client: # 客户端进行Eureka注册的配置
@@ -37,6 +47,6 @@ eureka:
   instance:
     lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
     lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
-    instance-id: send-8801.com  # 在信息列表时显示主机名称
+    instance-id: receive-8802.com  # 在信息列表时显示主机名称
     prefer-ip-address: true     # 访问的路径变为IP地址
 

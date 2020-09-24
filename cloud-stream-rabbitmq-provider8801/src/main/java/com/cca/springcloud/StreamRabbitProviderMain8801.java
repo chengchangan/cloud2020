@@ -10,8 +10,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @SpringBootApplication
 @EnableEurekaClient
-public class StreamRabbitMain8801 {
+public class StreamRabbitProviderMain8801 {
     public static void main(String[] args) {
-        SpringApplication.run(StreamRabbitMain8801.class, args);
+        SpringApplication.run(StreamRabbitProviderMain8801.class, args);
     }
 }
