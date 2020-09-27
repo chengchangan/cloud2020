@@ -29,6 +29,9 @@
         <module>cloud-config-client-3355</module>
         <module>cloud-stream-rabbitmq-provider8801</module>
         <module>cloud-stream-rabbitmq-consumer8802</module>
+        <module>cloudalibaba-provider-payment9001</module>
+        <module>cloudalibaba-consumer-order-nacos83</module>
+        <module>cloudalibaba-config-center-nacos3377</module>
     </modules>
 
 

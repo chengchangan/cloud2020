@@ -1,0 +1,21 @@
+package com.cca.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author cca
+ * @date 2020/9/27 20:14
+ */
+@Slf4j
+@RestController
+@RefreshScope
+public class ConfigController {
+
+
+    @Value("${server.port}")
+    private String serverPort;
+
+}

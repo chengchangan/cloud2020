@@ -1,0 +1,16 @@
+server:
+  port: 83
+
+spring:
+  application:
+    name: nacos-order-consumer-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.79.136.105:8848
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
