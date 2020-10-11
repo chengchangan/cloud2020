@@ -14,13 +14,13 @@ spring:
     nacos:
       discovery:
         server-addr: 120.79.136.105:8848 #服务注册中心地址
-        namespace: 748441cb-891c-44c5-84b3-031a6dd42d05
+        namespace: 748441cb-891c-44c5-84b3-031a6dd42d05 #表示注册到哪个环境上去 dev/test/prod等
       config: # 配置中心的文件命名方式， {spring.application.name}-{spring.profiles.active}.{config.file-extension}
               # 即： 服务名-环境.后缀  例如：nacos-config-client-dev.yaml
         server-addr: 120.79.136.105:8848 #配置中心地址
         # 该项目的配置
         namespace: 748441cb-891c-44c5-84b3-031a6dd42d05 # dev环境的命名空间ID
-        group: config_group # 配置所属分组
+        group: config_group # 配置所属分组, 可以使用默认 【DEFAULT_GROUP】
         file-extension: yaml #指定yaml格式的配置
         # 通用共享配置 优先级按照顺序依次降低
         ext-config:
